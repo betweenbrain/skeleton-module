@@ -14,12 +14,13 @@
 		<filename>index.html</filename>
 		<filename>helper.php</filename>
 		<folder>elements</folder>
-		<folder>language</folder>
 		<folder>tmpl</folder>
 	</files>
+
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.mod_skeleton.ini</language>
 	</languages>
+
 	<params addpath="/modules/mod_skeleton/elements">
 		<param type="diagnostic"/>
 		<param name="sometext"
