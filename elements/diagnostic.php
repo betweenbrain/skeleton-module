@@ -49,7 +49,7 @@ class JElementDiagnostic extends JElement {
 
 				$messages[] = "Caching is enabled.";
 
-				$cache    = $cachedir . 'cache.json';
+				$cache    = $cachedir . 'bones.json';
 				$cacheAge = date("F d Y H:i:s", filemtime($cache));
 
 				if (file_exists($cache)) {
