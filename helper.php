@@ -13,127 +13,111 @@
 
 class modSkeletonHelper {
 
-    /**
-     * Module parameters
-     * @var    boolean
-     * @since  0.0
-     */
-    protected $params;
+	/**
+	 * Module parameters
+	 *
+	 * @var    boolean
+	 * @since  0.0
+	 */
+	protected $params;
 
-    /**
-     * Constructor
-     *
-     * @param   JRegistry  $params  The module parameters
-     *
-     * @since  0.0
-     */
-    public function __construct($params) {
-        // Store the module params
-        $this->params = $params;
-    }
+	/**
+	 * Constructor
+	 *
+	 * @param   JRegistry  $params  The module parameters
+	 *
+	 * @since  0.0
+	 */
+	public function __construct($params) {
+		// Store the module params
+		$this->params = $params;
+	}
 
-    /**
-     * Protected function to do something. Protected as it is only used within this class.
-     *
-     * @param $result
-     * @return array
-     * @since  0.0
-     */
-    protected function bar($result) {
+	/**
+	 * Function foo
+	 *
+	 * @return bool
+	 * @since  0.0
+	 */
+	function foo() {
+		$result = htmlspecialchars($this->params->get('sometext'));
 
-        // Remove double spaces, tabs, new lines.
-        $result = preg_replace(array('/\s{2,}+/', '/\t/', '/\n/'), '', $result);
+		return $this->bar($result);
+	}
 
-        // Make vowels uppercase
-        $result = str_replace(array('a', 'e', 'i', 'o', 'u'), array('A', 'E', 'I', 'O', 'U'), $result);
+	/**
+	 * Protected function to do something. Protected as it is only used within this class.
+	 *
+	 * @param $result
+	 * @return array
+	 * @since  0.0
+	 */
+	protected function bar($result) {
 
-        return $result;
-    }
+		// Remove double spaces, tabs, new lines.
+		$result = preg_replace(array('/\s{2,}+/', '/\t/', '/\n/'), '', $result);
 
-    /**
-     * Function to compile data cache file
-     * @param $json
-     * @param string $name
-     * @return bool
-     * @since  0.0
-     */
-    function compileCache($json, $name = "raw") {
-        $cacheFile = JPATH_CACHE . '/mod_skeleton/skeleton_' . $name . '_cache.json';
-        // Don't compile cache if json has no data.
-        if (json_decode($json)) {
-            file_put_contents($cacheFile, $json);
-            if (file_exists($cacheFile)) {
+		// Make vowels uppercase
+		$result = str_replace(array('a', 'e', 'i', 'o', 'u'), array('A', 'E', 'I', 'O', 'U'), $result);
 
-                return TRUE;
-            }
-        }
+		return $result;
+	}
 
-        return FALSE;
-    }
+	/**
+	 * Function to fetch cached data
+	 *
+	 * @internal param string $name
+	 * @return bool|mixed
+	 * @since    0.0
+	 */
+	function fetchCache() {
+		$cache = JPATH_CACHE . '/mod_skeleton/bones.json';
+		// If cache is enabled, and there is a cache file, use it.
+		if ($this->params->get('cache') && $this->validateCache($cache)) {
+			$json = file_get_contents($cache);
+			// When json_decode is TRUE, returned objects will be converted into associative arrays. http://php.net/manual/en/function.json-decode.php
+			$data = json_decode($json, TRUE);
 
-    /**
-     * Function to fetch cached
-     * @param string $name
-     * @return bool|mixed
-     * @since  0.0
-     */
-    function fetchCache($name = "raw") {
-        // If cache is enabled, and there is a cache file, use it.
-        if ($this->params->get('cache') && $this->validateCache($name)) {
-            $json = file_get_contents(JPATH_CACHE . '/mod_skeleton/skeleton_' . $name . '_cache.json');
-            // When json_decode is TRUE, returned objects will be converted into associative arrays. http://php.net/manual/en/function.json-decode.php
-            $data = json_decode($json, TRUE);
+			return $data;
+		}
 
-            return $data;
-        }
+		return FALSE;
+	}
 
-        return FALSE;
-    }
+	/**
+	 * Function to compile cache file
+	 *
+	 * @since  1.0
+	 */
+	protected function compileCache($json, $cache) {
+		if (json_decode($json)) {
+			file_put_contents($cache, $json);
+			if (file_exists($cache)) {
+				return TRUE;
+			}
+		}
+	}
 
-    /**
-     * Function foo
-     * @return bool
-     * @since  0.0
-     */
-    function foo() {
-        $result = htmlspecialchars($this->params->get('sometext'));
+	/**
+	 * Function to validate cache file
+	 *
+	 * @since  1.0
+	 */
+	function validateCache($cache) {
+		if ($this->params->get('cache')) {
+			if (file_exists($cache)) {
+				$cacheTime = ($this->params->get('cachetime', 15)) * 60;
+				$cacheAge  = filemtime($cache);
+				if ((time() - $cacheAge) >= $cacheTime) {
+					unlink($cache);
 
-        return $this->bar($result);
-    }
+					return FALSE;
+				}
 
-    /**
-     * Function to validate cache file
-     * @param string $name
-     * @return bool
-     * @since  0.0
-     */
-    function validateCacheAge($name = "raw") {
-        $cacheFile = JPATH_CACHE . '/mod_skeleton/skeleton_' . $name . '_cache.json';
-        // If caching is enabled
-        if ($this->params->get('cache') && file_exists($cacheFile)) {
-            // Convert user input max cache age to minutes
-            $cacheMaxAge = ($this->params->get('cachemaxage', 15)) * 60;
-            // Get age of cache file
-            $cacheAge = filemtime($cacheFile);
-            // Check if cache has expired
-            if ((time() - $cacheAge) >= $cacheMaxAge) {
-                // If it's stale, delete it and...
-                unlink($cacheFile);
-
-                // ... return false as cache isn't valid
-                return FALSE;
-            }
-
-            // Cache is valid
-            return TRUE;
-        }
-
-        // Remove old cache file if caching is turned off
-        if (!$this->params->get('cache') && file_exists($cacheFile)) {
-            unlink($cacheFile);
-        }
-
-        return FALSE;
-    }
-
+				return TRUE;
+			}
+		} elseif (!$this->params->get('cache') && file_exists($cache)) {
+			unlink($cache);
+		}
+	}
 }
