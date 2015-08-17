@@ -1,80 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="module" version="2.5" method="upgrade">
-	<name>Skeleton</name>
-	<creationDate>December 31, 2012</creationDate>
+<extension type="module"
+           version="3.2"
+           method="upgrade">
+	<name>mod_skeleton</name>
+	<creationDate>August 17, 2015</creationDate>
 	<author>Matt Thomas</author>
 	<authorUrl>http://betweenbrain.com</authorUrl>
-	<copyright>Copyright (C) 2012 Matt Thomas. All rights reserved.</copyright>
+	<copyright>Copyright (C) 2012-2015-2015 Matt Thomas. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>1.5.0</version>
+	<version>0.0.1</version>
 	<description>MOD_SKELETON_DESC</description>
+
 	<files>
-		<filename>mod_skeleton.xml</filename>
 		<filename module="mod_skeleton">mod_skeleton.php</filename>
-		<filename>index.html</filename>
 		<filename>helper.php</filename>
-		<folder>elements</folder>
+		<folder>language</folder>
 		<folder>tmpl</folder>
 	</files>
 
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.mod_skeleton.ini</language>
-	</languages>
-
-	<params addpath="/modules/mod_skeleton/elements">
-		<param type="diagnostic"/>
-		<param name="sometext"
-		       type="text"
-		       default=""
-		       label="MOD_SKELETON_SOMETEXT_LABEL"
-		       description="MOD_SKELETON_SOMETEXT_DESC"
-		       size="15"/>
-		<param name="somelist"
-		       type="list"
-		       default="0"
-		       label="MOD_SKELETON_SOMELIST_LABEL"
-		       description="MOD_SKELETON_SOMELIST_DESC">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</param>
-		<param name="sometextarea"
-		       type="textarea"
-		       default=""
-		       label="MOD_SKELETON_SOMETEXTAREA_LABEL"
-		       description="MOD_SKELETON_SOMETEXTAREA_DESC"
-		       rows="5"
-		       cols="50"/>
-	</params>
-	<params group="advanced">
-		<param name="cache"
-		       type="list"
-		       default="0"
-		       label="MOD_SKELETON_CACHE_LABEL"
-		       description="MOD_SKELETON_CACHE_DESC">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</param>
-		<param name="cachemaxage"
-		       type="text"
-		       default="15"
-		       label="MOD_SKELETON_CACHEMAXAGE_LABEL"
-		       description="MOD_SKELETON_CACHEMAXAGE_DESC"/>
-		<param name="moduleclass_sfx"
-		       type="text"
-		       default=""
-		       label="Module Class Suffix"
-		       description="PARAMMODULECLASSSUFFIX"/>
-		<param name="displaydiagnostic"
-		       type="list"
-		       default="0"
-		       label="MOD_SKELETON_DISPLAYDIAGNOSTIC_LABEL"
-		       description="MOD_SKELETON_DISPLAYDIAGNOSTIC_DESC">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</param>
-	</params>
-	<params group="other">
-		<param type="spacer"
-		       default="Some Label"/>
-	</params>
-</install>
+</extension>

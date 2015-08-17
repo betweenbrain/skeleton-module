@@ -2,12 +2,12 @@
 
 /**
  * File       default.php
- * Created    12/31/12 11:59 AM
+ * Created    8/17/15 1:57 PM
  * Author     Matt Thomas
  * Website    http://betweenbrain.com
  * Email      matt@betweenbrain.com
  * Support    https://github.com/betweenbrain/
- * Copyright  Copyright (C) 2012 betweenbrain llc. All Rights Reserved.
+ * Copyright  Copyright (C) 2012-2015 betweenbrain llc. All Rights Reserved.
  * License    GNU GPL v3 or later
  */
 
