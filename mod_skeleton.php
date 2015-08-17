@@ -12,7 +12,7 @@
  */
 
 // Include the helper file
-require_once(dirname(__FILE__) . DS . 'helper.php');
+require_once __DIR__ . '/helper.php';
 // Instantiate our class
 $skeleton = new modSkeletonHelper($params);
 // Call the foo function
